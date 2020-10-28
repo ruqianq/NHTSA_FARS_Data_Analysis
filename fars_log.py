@@ -1,4 +1,4 @@
-from sklearn import ensemble
+from sklearn.ensemble import RandomForestClassifier
 
 # Training data
 X = dm_traindf.loc[:, dm_input]
@@ -7,7 +7,6 @@ X = dm_traindf.loc[:, dm_input]
 y = dm_traindf[dm_dec_target]
 
 # Fit RandomForest model w/ training data
-params = {'n_estimators': 100}
-dm_model = ensemble.RandomForestClassifier(**params)
+dm_model = RandomForestClassifier(n_estimators=10)
 dm_model.fit(X, y)
 print(dm_model)
