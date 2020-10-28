@@ -1,4 +1,4 @@
-from sklearn.linear_model import SGDClassifier
+from sklearn import ensemble
 
 # Training data
 X = dm_traindf.loc[:, dm_input]
@@ -6,8 +6,8 @@ X = dm_traindf.loc[:, dm_input]
 # Labels
 y = dm_traindf[dm_dec_target]
 
-dm_model = SGDClassifier(loss="hinge", penalty="l2", max_iter=5)
-
+# Fit RandomForest model w/ training data
+params = {'n_estimators': 100}
+dm_model = ensemble.RandomForestClassifier(**params)
 dm_model.fit(X, y)
-
 print(dm_model)
