@@ -6,8 +6,9 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-scikit-learn = "==0.20.0"
-pandas = "==0.23.1"
+scikit-learn = "*"
+pandas = "*"
+google-cloud-bigquery = "*"
 
 [requires]
-python_version = "2.7.5"
+python_version = "3.8"
