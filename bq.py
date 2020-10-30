@@ -22,9 +22,7 @@ query = """
     WHERE number_of_forms_submitted_for_persons_not_in_motor_vehicles > 0
     LIMIT 20
 """
-query_job = client.query(query)  # Make an API request.
+  # Make an API request.
 
-print("The query data:")
-for row in query_job:
-    # Row values can be accessed by field name or index.
-    print("name={}, count={}".format(row[0], row[1]))
+df = client.query(query).to_dataframe()
+print(df.head())

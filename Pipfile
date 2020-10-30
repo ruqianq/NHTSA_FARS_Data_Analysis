@@ -9,6 +9,8 @@ verify_ssl = true
 scikit-learn = "*"
 pandas = "*"
 google-cloud-bigquery = "*"
+pyarrow = "*"
+google-cloud-bigquery-storage = "*"
 
 [requires]
 python_version = "3.8"
