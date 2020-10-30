@@ -1,6 +1,8 @@
 from google.cloud import bigquery
 
 # Construct a BigQuery client object.
+# Follow the instruction: https://cloud.google.com/bigquery/docs/reference/libraries?authuser=1#client-libraries-usage-python
+
 client = bigquery.Client()
 
 query = """
