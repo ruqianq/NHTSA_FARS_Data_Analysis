@@ -1,11 +1,13 @@
 from google.cloud import bigquery
+import pandas as pd
 
 # Construct a BigQuery client object.
 # Follow the instruction: https://cloud.google.com/bigquery/docs/reference/libraries?authuser=1#client-libraries-usage-python
 
-client = bigquery.Client()
 
-query = """
+def to_df() -> pd.DataFrame:
+    client = bigquery.Client()
+    query = """
     SELECT *
     FROM (
     SELECT *
@@ -21,8 +23,5 @@ query = """
     ON ap.vehicle_number = v.vehicle_number
     WHERE number_of_forms_submitted_for_persons_not_in_motor_vehicles > 0
     LIMIT 20
-"""
-  # Make an API request.
-
-df = client.query(query).to_dataframe()
-print(df.head())
+    """
+    return client.query(query).to_dataframe()
