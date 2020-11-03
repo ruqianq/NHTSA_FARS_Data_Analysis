@@ -2,7 +2,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 import pandas as pd
 
-df = pd.read_csv('table_NHTSA_FARS_sample.csv')
+df = pd.read_csv('data_sample.csv')
 
 # Data cleanse
 
@@ -24,5 +24,6 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random
 #
 # Fit RandomForest model w/ training data
 dm_model = RandomForestClassifier(n_estimators=10)
-dm_model.fit(X, y)
-print(dm_model)
+dm_model.fit(X_train, y_train)
+
+print(pd.DataFrame(dm_model.predict_proba(X_test), columns=['P_Injury_0', 'P_Fatal_1']))
