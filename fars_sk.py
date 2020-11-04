@@ -16,6 +16,7 @@ y = df_cln["ped_death"]
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
 
+# Viya Open Source Code Node
 # # Training data
 # X = dm_traindf.loc[:, dm_input]
 #
@@ -26,4 +27,4 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random
 dm_model = RandomForestClassifier(n_estimators=10)
 dm_model.fit(X_train, y_train)
 
-print(pd.DataFrame(dm_model.predict_proba(X_test), columns=['P_Injury_0', 'P_Fatal_1']))
+print(pd.DataFrame(dm_model.predict(X_test), columns=['P_Injury_0']))
