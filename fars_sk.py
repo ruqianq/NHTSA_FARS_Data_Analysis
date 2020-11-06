@@ -12,8 +12,8 @@ df_cln["ped_death"] = df_cln.apply(lambda row: 1 if (row.number_of_fatalities - 
                                    axis=1)
 print(df_cln["ped_death"])
 
-# X = df_cln.drop(["ped_death"], axis=1)
-# y = df_cln["ped_death"]
-#
-# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
-#
+X = df_cln.drop(["ped_death"], axis=1)
+y = df_cln["ped_death"]
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
+
