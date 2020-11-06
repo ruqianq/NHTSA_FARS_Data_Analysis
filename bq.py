@@ -36,7 +36,6 @@ def to_df() -> pd.DataFrame:
     JOIN
     `bigquery-public-data.nhtsa_traffic_fatalities.vehicle_2015` v
     ON ap.vehicle_number = v.vehicle_number
-    WHERE number_of_forms_submitted_for_persons_not_in_motor_vehicles	> 0
-    LIMIT 20
+    LIMIT 100
     """
     return client.query(query).to_dataframe()
