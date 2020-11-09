@@ -1,4 +1,8 @@
 import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix, accuracy_score
+
 
 # query = """
 #     SELECT
@@ -30,8 +34,6 @@ import pandas as pd
 #     ON ap.vehicle_number = v.vehicle_number
 #     WHERE speeding_related LIKE '%Yes%'
 #     """
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
 
 query = """
 SELECT * FROM `nhtsa-daisy.fars_2015.fars_apv_2015` 
@@ -46,6 +48,8 @@ df_cln = df[df.columns[df.isnull().mean() < 0.5]]
 df_cln["ped_death"] = df_cln.apply(lambda row: 1 if (row.number_of_fatalities - row.fatalities_in_vehicle > 0) else 0,
                                    axis=1)
 # Encoding
+df_cln = df_cln.drop(['consecutive_number', 'number_of_fatalities', 'fatalities_in_vehicle'], axis=1)
+
 df_cln["relation_to_junction_within_interchange_area"] = df_cln.apply(
     lambda row: 1 if (row.relation_to_junction_within_interchange_area == 'Yes') else 0, axis=1)
 
@@ -88,9 +92,17 @@ df_cln['police_reported_drug_involvement'] = df_cln.apply(
 df_cln['sex'] = df_cln.apply(
     lambda row: 0 if (row.sex == 'Female') else 1, axis=1)
 
-# Normalize Data
-
 X = df_cln.drop(["ped_death"], axis=1)
 y = df_cln["ped_death"]
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0)
+
+# Logistic Regression
+
+classifier = LogisticRegression(random_state=0)
+classifier.fit(X_train, y_train)
+y_pred = classifier.predict(X_test)
+
+cm = confusion_matrix(y_test, y_pred)
+print(cm)
+print(accuracy_score(y_test, y_pred))
