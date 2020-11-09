@@ -12,7 +12,7 @@ import bq
 #     related_factors_driver_level_3, related_factors_driver_level_4, roadway_alignment, roadway_grade,
 #     roadway_surface_condition, crash_type, fatalities_in_vehicle
 #     FROM (
-#     SELECT a.state_number, state_name, a.consecutive_number,
+#     SELECT a.state_number, a.consecutive_number,
 #     number_of_forms_submitted_for_persons_not_in_motor_vehicles, a.county, city, a.day_of_crash, a.month_of_crash,
 #     day_of_week, a.hour_of_crash, national_highway_system, a.land_use, a.functional_system, ownership
 #     route_signing, a.first_harmful_event, a.manner_of_collision, relation_to_junction_within_interchange_area,
