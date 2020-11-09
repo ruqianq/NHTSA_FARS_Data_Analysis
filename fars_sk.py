@@ -30,6 +30,8 @@ import pandas as pd
 #     ON ap.vehicle_number = v.vehicle_number
 #     WHERE speeding_related LIKE '%Yes%'
 #     """
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
 
 query = """
 SELECT * FROM `nhtsa-daisy.fars_2015.fars_apv_2015` 
@@ -37,7 +39,7 @@ SELECT * FROM `nhtsa-daisy.fars_2015.fars_apv_2015`
 
 # Data cleanse
 
-df = pd.read_csv('sample_data.csv')
+df = pd.read_csv('sample_dataset.csv')
 df_cln = df[df.columns[df.isnull().mean() < 0.5]]
 
 # Create Target
@@ -86,12 +88,9 @@ df_cln['police_reported_drug_involvement'] = df_cln.apply(
 df_cln['sex'] = df_cln.apply(
     lambda row: 0 if (row.sex == 'Female') else 1, axis=1)
 
-print(df_cln.dtypes)
+# Normalize Data
 
-# X = df_cln.drop(["ped_death"], axis=1)
-# y = df_cln["ped_death"]
-#
-# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
-#
-# model = RandomForestClassifier().fit(X, y)
-# print(model)
+X = df_cln.drop(["ped_death"], axis=1)
+y = df_cln["ped_death"]
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
