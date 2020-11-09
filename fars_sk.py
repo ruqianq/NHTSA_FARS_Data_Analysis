@@ -1,8 +1,8 @@
 import pandas as pd
-from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix, accuracy_score
-
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier, plot_tree
 
 # query = """
 #     SELECT
@@ -99,9 +99,19 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random
 
 # Logistic Regression
 
-classifier = LogisticRegression(random_state=0)
-classifier.fit(X_train, y_train)
-y_pred = classifier.predict(X_test)
+log_classifier = LogisticRegression(random_state=0)
+log_classifier.fit(X_train, y_train)
+y_pred = log_classifier.predict(X_test)
+
+cm = confusion_matrix(y_test, y_pred)
+print(cm)
+print(accuracy_score(y_test, y_pred))
+
+# Decision Tree
+
+dt_classifier = DecisionTreeClassifier(criterion='entropy', random_state=0)
+dt_classifier.fit(X_train, y_train)
+y_pred = dt_classifier.predict(X_test)
 
 cm = confusion_matrix(y_test, y_pred)
 print(cm)
