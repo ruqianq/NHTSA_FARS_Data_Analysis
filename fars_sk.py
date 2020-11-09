@@ -3,7 +3,7 @@ import pandas as pd
 # query = """
 #     SELECT
 #     ap.*, body_type,
-#     vehicle_trailing, gross_vehicle_weight_rating, hazardous_material_involvement, travel_speed,
+#     vehicle_trailing, gross_vehicle_weight_rating, travel_speed,
 #     previous_recorded_crashes, previous_recorded_suspensions_and_revocations, previous_dwi_convictions,
 #     previous_speeding_convictions, speeding_related, related_factors_driver_level_1, related_factors_driver_level_2,
 #     related_factors_driver_level_3, related_factors_driver_level_4, roadway_alignment, roadway_grade,
