@@ -1,7 +1,4 @@
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
 import pandas as pd
-import bq
 
 # query = """
 #     SELECT
@@ -15,10 +12,10 @@ import bq
 #     SELECT a.state_number, a.consecutive_number,
 #     number_of_forms_submitted_for_persons_not_in_motor_vehicles, a.county, city, a.day_of_crash, a.month_of_crash,
 #     day_of_week, a.hour_of_crash, national_highway_system, a.land_use, a.functional_system, ownership
-#     route_signing, a.first_harmful_event, a.manner_of_collision, relation_to_junction_within_interchange_area,
-#     relation_to_junction_specific_location, type_of_intersection, work_zone, relation_to_trafficway, light_condition,
+#     route_signing, a.first_harmful_event, a.manner_of_collision,
+#     relation_to_junction_specific_location, relation_to_trafficway, light_condition,
 #     atmospheric_conditions, related_factors_crash_level_1, related_factors_crash_level_2, related_factors_crash_level_3,
-#     number_of_fatalities, p.vehicle_number, p.person_number, p.rollover, p.age, p.sex, p.person_type, p.injury_severity,
+#     number_of_fatalities, p.vehicle_number, p.person_number, p.age, p.sex, p.person_type, p.injury_severity,
 #     p.police_reported_alcohol_involvement, p.police_reported_drug_involvement, related_factors_person_level1,
 #     related_factors_person_level2, related_factors_person_level3, race
 #     FROM
@@ -34,14 +31,31 @@ import bq
 #     LIMIT 100
 #     """
 
+query = """
+SELECT * FROM `nhtsa-daisy.fars_2015.fars_apv_2015_trim` 
+"""
 
 # Data cleanse
 
 df = pd.read_csv('sample_data.csv')
 df_cln = df[df.columns[df.isnull().mean() < 0.5]]
+
+# Create Target
 df_cln["ped_death"] = df_cln.apply(lambda row: 1 if (row.number_of_fatalities - row.fatalities_in_vehicle > 0) else 0,
                                    axis=1)
-print(df_cln.select_dtypes('object'))
+# Encoding
+df_cln["relation_to_junction_within_interchange_area"] = df_cln.apply(
+    lambda row: 1 if (row.relation_to_junction_within_interchange_area == 'Yes') else 0, axis=1)
+
+df_cln['vehicle_trailing'] = df_cln['vehicle_trailing'].str[0:3]
+df_cln['vehicle_trailing'] = df_cln.apply(
+    lambda row: 0 if (row.vehicle_trailing == 'No ') else 1, axis=1)
+
+labels = df_cln['gross_vehicle_weight_rating'].astype('category').cat.categories.tolist()
+replace_map_comp = {'gross_vehicle_weight_rating': {k: v for k, v in zip(labels, list(range(0, len(labels) + 1)))}}
+df_cln.replace(replace_map_comp, inplace=True)
+
+
 # X = df_cln.drop(["ped_death"], axis=1)
 # y = df_cln["ped_death"]
 #
