@@ -67,7 +67,23 @@ labels4 = df_cln['roadway_surface_type'].astype('category').cat.categories.tolis
 replace_map_comp4 = {'roadway_surface_type': {k: v for k, v in zip(labels4, list(range(1, len(labels4) + 1)))}}
 df_cln.replace(replace_map_comp4, inplace=True)
 
+labels5 = df_cln['type_of_intersection'].astype('category').cat.categories.tolist()
+replace_map_comp5 = {'type_of_intersection': {k: v for k, v in zip(labels5, list(range(1, len(labels5) + 1)))}}
+df_cln.replace(replace_map_comp5, inplace=True)
+
+df_cln['rollover'] = df_cln['rollover'].str[0:2]
+df_cln['rollover'] = df_cln.apply(
+    lambda row: 0 if (row.rollover == 'No') else 1, axis=1)
+
+df_cln['police_reported_alcohol_involvement'] = df_cln['police_reported_alcohol_involvement'].str[0:3]
+df_cln['police_reported_alcohol_involvement'] = df_cln.apply(
+    lambda row: 1 if (row.police_reported_alcohol_involvement == 'Yes') else 0, axis=1)
+
+df_cln['sex'] = df_cln.apply(
+    lambda row: 0 if (row.sex == 'Female') else 1, axis=1)
+
 print(df_cln.dtypes)
+print(df_cln['police_reported_alcohol_involvement'])
 
 # X = df_cln.drop(["ped_death"], axis=1)
 # y = df_cln["ped_death"]
