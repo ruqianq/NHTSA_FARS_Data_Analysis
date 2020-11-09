@@ -32,7 +32,7 @@ import pandas as pd
 #     """
 
 query = """
-SELECT * FROM `nhtsa-daisy.fars_2015.fars_apv_2015_trim` 
+SELECT * FROM `nhtsa-daisy.fars_2015.fars_apv_2015` 
 """
 
 # Data cleanse
