@@ -55,6 +55,19 @@ labels = df_cln['gross_vehicle_weight_rating'].astype('category').cat.categories
 replace_map_comp = {'gross_vehicle_weight_rating': {k: v for k, v in zip(labels, list(range(0, len(labels) + 1)))}}
 df_cln.replace(replace_map_comp, inplace=True)
 
+labels2 = df_cln['roadway_alignment'].astype('category').cat.categories.tolist()
+replace_map_comp2 = {'roadway_alignment': {k: v for k, v in zip(labels2, list(range(1, len(labels2) + 1)))}}
+df_cln.replace(replace_map_comp2, inplace=True)
+
+labels3 = df_cln['roadway_grade'].astype('category').cat.categories.tolist()
+replace_map_comp3 = {'roadway_grade': {k: v for k, v in zip(labels3, list(range(1, len(labels3) + 1)))}}
+df_cln.replace(replace_map_comp3, inplace=True)
+
+labels4 = df_cln['roadway_surface_type'].astype('category').cat.categories.tolist()
+replace_map_comp4 = {'roadway_surface_type': {k: v for k, v in zip(labels4, list(range(1, len(labels4) + 1)))}}
+df_cln.replace(replace_map_comp4, inplace=True)
+
+print(df_cln.dtypes)
 
 # X = df_cln.drop(["ped_death"], axis=1)
 # y = df_cln["ped_death"]
