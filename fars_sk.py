@@ -46,7 +46,6 @@ SELECT * FROM `nhtsa-daisy.fars_2015.fars_apv_2015`
 """
 
 # Data cleanse
-
 df = bq.to_df(query)
 df_cln = df[df.columns[df.isnull().mean() < 0.5]]
 
@@ -98,11 +97,13 @@ df_cln['police_reported_drug_involvement'] = df_cln.apply(
 df_cln['sex'] = df_cln.apply(
     lambda row: 0 if (row.sex == 'Female') else 1, axis=1)
 
+# Split training set and testing set
 X = df_cln.drop(["ped_death"], axis=1)
 y = df_cln["ped_death"]
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0)
 
+# Training model
 classifiers = [LogisticRegression(random_state=1234),
                GaussianNB(),
                KNeighborsClassifier(),
@@ -123,17 +124,16 @@ for cls in classifiers:
                                         'tpr': tpr,
                                         'auc': auc}, ignore_index=True)
 
-# Set name of the classifiers as index labels
 result_table.set_index('classifiers', inplace=True)
 
-fig = plt.figure(figsize=(8,6))
+fig = plt.figure(figsize=(8, 6))
 
 for i in result_table.index:
     plt.plot(result_table.loc[i]['fpr'],
              result_table.loc[i]['tpr'],
              label="{}, AUC={:.3f}".format(i, result_table.loc[i]['auc']))
 
-plt.plot([0,1], [0,1], color='orange', linestyle='--')
+plt.plot([0, 1], [0, 1], color='orange', linestyle='--')
 
 plt.xticks(np.arange(0.0, 1.1, step=0.1))
 plt.xlabel("False Positive Rate", fontsize=15)
