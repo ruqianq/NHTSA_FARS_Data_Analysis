@@ -11,6 +11,7 @@ pandas = "*"
 google-cloud-bigquery = "*"
 pyarrow = "*"
 google-cloud-bigquery-storage = "*"
+matplotlib = "*"
 
 [requires]
 python_version = "3.8"
