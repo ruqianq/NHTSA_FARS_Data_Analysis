@@ -39,6 +39,7 @@ import matplotlib.pyplot as plt
 #     ON ap.vehicle_number = v.vehicle_number
 #     WHERE speeding_related LIKE '%Yes%'
 #     """
+import bq
 
 query = """
 SELECT * FROM `nhtsa-daisy.fars_2015.fars_apv_2015` 
@@ -46,7 +47,7 @@ SELECT * FROM `nhtsa-daisy.fars_2015.fars_apv_2015`
 
 # Data cleanse
 
-df = pd.read_csv('sample_dataset.csv')
+df = bq.to_df(query)
 df_cln = df[df.columns[df.isnull().mean() < 0.5]]
 
 # Create Target
