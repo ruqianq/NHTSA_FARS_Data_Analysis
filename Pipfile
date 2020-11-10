@@ -12,6 +12,7 @@ google-cloud-bigquery = "*"
 pyarrow = "*"
 google-cloud-bigquery-storage = "*"
 matplotlib = "*"
+jupyter = "*"
 
 [requires]
-python_version = "3.8"
+python_version = "3.7"

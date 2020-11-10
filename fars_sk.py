@@ -52,6 +52,7 @@ df_cln = df[df.columns[df.isnull().mean() < 0.5]]
 # Create Target
 df_cln["ped_death"] = df_cln.apply(lambda row: 1 if (row.number_of_fatalities - row.fatalities_in_vehicle > 0) else 0,
                                    axis=1)
+
 # Encoding
 df_cln = df_cln.drop(['consecutive_number', 'number_of_fatalities', 'fatalities_in_vehicle'], axis=1)
 
