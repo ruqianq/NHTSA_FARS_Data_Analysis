@@ -20,8 +20,8 @@ df = bq.to_df(query)
 df_cln = df[df.columns[df.isnull().mean() < 0.5]]
 
 # Create Target
-df_cln["ped_death"] = df_cln.apply(lambda row: 1 if (row.number_of_fatalities - row.fatalities_in_vehicle > 0) else 0,
-                                   axis=1)
+df_cln['death'] = df_cln.apply(lambda row: 1 if (row.number_of_fatalities - row.fatalities_in_vehicle > 0) else 0,
+                               axis=1)
 
 # Encoding
 df_cln = df_cln.drop(['consecutive_number', 'number_of_fatalities', 'fatalities_in_vehicle'], axis=1)
@@ -69,8 +69,8 @@ df_cln['sex'] = df_cln.apply(
     lambda row: 0 if (row.sex == 'Female') else 1, axis=1)
 
 # Split training set and testing set
-X = df_cln.drop(["ped_death"], axis=1)
-y = df_cln["ped_death"]
+X = df_cln.drop(['death'], axis=1)
+y = df_cln['death']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0)
 
